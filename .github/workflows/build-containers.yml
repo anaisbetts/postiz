@@ -7,6 +7,10 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-containers-common:
     runs-on: ubuntu-latest
@@ -53,11 +57,11 @@ jobs:
         env:
           CONTAINERVER: ${{ needs.build-containers-common.outputs.containerver }}
         run: |
-          docker tag localhost/postiz ghcr.io/gitroomhq/postiz-app:${{ env.CONTAINERVER }}-${{ matrix.arch }}
-          docker push ghcr.io/gitroomhq/postiz-app:${{ env.CONTAINERVER }}-${{ matrix.arch }}
+          docker tag localhost/postiz ghcr.io/anaisbetts/postiz:${{ env.CONTAINERVER }}-${{ matrix.arch }}
+          docker push ghcr.io/anaisbetts/postiz:${{ env.CONTAINERVER }}-${{ matrix.arch }}
 
-          docker tag localhost/postiz-devcontainer ghcr.io/gitroomhq/postiz-devcontainer:${{ env.CONTAINERVER }}-${{ matrix.arch }}
-          docker push ghcr.io/gitroomhq/postiz-devcontainer:${{ env.CONTAINERVER }}-${{ matrix.arch }}
+          docker tag localhost/postiz-devcontainer ghcr.io/anaisbetts/postiz-devcontainer:${{ env.CONTAINERVER }}-${{ matrix.arch }}
+          docker push ghcr.io/anaisbetts/postiz-devcontainer:${{ env.CONTAINERVER }}-${{ matrix.arch }}
 
   build-container-manifest:
     needs: [build-containers, build-containers-common]
@@ -75,15 +79,15 @@ jobs:
           CONTAINERVER: ${{ needs.build-containers-common.outputs.containerver }}
         run: |
           docker manifest create \
-            ghcr.io/gitroomhq/postiz-app:latest \
-            ghcr.io/gitroomhq/postiz-app:${{ env.CONTAINERVER }}-arm64 \
-            ghcr.io/gitroomhq/postiz-app:${{ env.CONTAINERVER }}-amd64
+            ghcr.io/anaisbetts/postiz:latest \
+            ghcr.io/anaisbetts/postiz:${{ env.CONTAINERVER }}-arm64 \
+            ghcr.io/anaisbetts/postiz:${{ env.CONTAINERVER }}-amd64
 
-          docker manifest push ghcr.io/gitroomhq/postiz-app:latest
+          docker manifest push ghcr.io/anaisbetts/postiz:latest
 
           docker manifest create \
-            ghcr.io/gitroomhq/postiz-devcontainer:latest \
-            ghcr.io/gitroomhq/postiz-devcontainer:${{ env.CONTAINERVER }}-arm64 \
-            ghcr.io/gitroomhq/postiz-devcontainer:${{ env.CONTAINERVER }}-amd64
+            ghcr.io/anaisbetts/postiz-devcontainer:latest \
+            ghcr.io/anaisbetts/postiz-devcontainer:${{ env.CONTAINERVER }}-arm64 \
+            ghcr.io/anaisbetts/postiz-devcontainer:${{ env.CONTAINERVER }}-amd64
 
-          docker manifest push ghcr.io/gitroomhq/postiz-devcontainer:latest
+          docker manifest push ghcr.io/anaisbetts/postiz-devcontainer:latest

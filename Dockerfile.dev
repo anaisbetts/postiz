@@ -33,7 +33,7 @@ COPY .env.example /config/postiz.env
 VOLUME /config
 VOLUME /uploads
 
-LABEL org.opencontainers.image.source=https://github.com/gitroomhq/postiz-app
+LABEL org.opencontainers.image.source=https://github.com/anaisbetts/postiz
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 
