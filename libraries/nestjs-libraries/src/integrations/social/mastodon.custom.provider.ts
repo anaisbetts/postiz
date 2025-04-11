@@ -74,7 +74,7 @@ export class MastodonCustomProvider extends MastodonProvider {
     return this.dynamicPost(
       id,
       accessToken,
-      'https://mastodon.social',
+      'https://tech.lgbt',
       postDetails
     );
   }
